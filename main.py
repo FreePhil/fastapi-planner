@@ -1,13 +1,21 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from starlette.middleware.cors import CORSMiddleware
 
 from database.connection import Settings
 from routes.events import event_router
 from routes.users import user_router
 
+origins = ['*']
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 settings = Settings()
 
 # Register routes
